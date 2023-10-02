@@ -1,9 +1,9 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Layout from '../../componenets/layout/Layout'
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import "../../styles/AuthStyles.css";
+import "../../styles/AuthStyle.css";
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -14,10 +14,12 @@ const Register = () => {
   const navigate = useNavigate();
 
   // form function
+
   const handleSubmit = async (e) => {
+    // console.log(`${process.env.REACT_APP_API}`);
     e.preventDefault();
     try {
-      const res = await axios.post("/api/v1/auth/register", {
+      const res = await axios.post(`/api/v1/auth/register`, {
         name,
         email,
         password,
