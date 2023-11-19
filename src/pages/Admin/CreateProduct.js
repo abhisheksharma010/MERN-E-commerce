@@ -50,6 +50,7 @@ const CreateProduct = () => {
         "/api/v1/product/create-product",
         productData
       );
+      // console.log(productData);
       if (data?.success) {
         toast.error(data?.message);
       } else {
