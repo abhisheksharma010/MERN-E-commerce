@@ -1,12 +1,12 @@
 import React from 'react';
 import Header from './Header';
-import {Helmet} from "react-helmet";
+import { Helmet } from "react-helmet";
 import Footer from './Fotter';
 
-const Layout = ({ children, title, description, keywords, author })  => { // Wrap children in curly braces
+const Layout = ({ children, title, description, keywords, author }) => { // Wrap children in curly braces
   return (
     <>
-    <Helmet>
+      <Helmet>
         <meta charSet="utf-8" />
         <meta name="description" content={description} />
         <meta name="keywords" content={keywords} />
@@ -17,6 +17,7 @@ const Layout = ({ children, title, description, keywords, author })  => { // Wra
       <main style={{ minHeight: "70vh" }}>
         {children}
       </main>
+
       <Footer />
     </>
   );

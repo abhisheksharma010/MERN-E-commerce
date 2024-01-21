@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import Layout from '../../componenets/layout/Layout'
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
