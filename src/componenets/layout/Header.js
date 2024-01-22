@@ -4,7 +4,7 @@ import { useAuth } from "../../context/auth";
 import toast from 'react-hot-toast';
 import SearchInput from "../Forms/SearchInput";
 import useCategory from '../../hooks/useCategory';
-import {useCart} from "../../context/cart";
+import { useCart } from "../../context/cart";
 import { Badge } from "antd";
 
 const Header = () => {
@@ -27,7 +27,7 @@ const Header = () => {
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon" />
+            <span className="navbar-toggler-icon" />🛒E-Commerce
           </button>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
             <Link to="/" className="navbar-brand">🛒E-Commerce </Link >
@@ -97,17 +97,17 @@ const Header = () => {
 
                 </>
               )}
-                              {auth?.user?.role === 0 && (
-                  <li className="nav-item">
-                    <NavLink to="/cart" className="nav-link">
+              {auth?.user?.role === 0 && (
+                <li className="nav-item">
+                  <NavLink to="/cart" className="nav-link">
                     <Badge count={cart?.length} showZero offset={[10, -5]}>
-                    Cart
-                  </Badge>
-                    </NavLink>
-                  </li>
-                )}
+                      Cart
+                    </Badge>
+                  </NavLink>
+                </li>
+              )}
 
-              
+
 
             </ul>
 

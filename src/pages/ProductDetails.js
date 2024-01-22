@@ -55,6 +55,10 @@ const ProductDetails = () => {
           <h6>Price : {product.price}</h6>
           <h6>Category : {product?.category?.name}</h6>
           <button class="btn btn-secondary ms-1">ADD TO CART</button>
+          <button class="btn btn-success ms-1" onClick={() => navigate(`/purchase/${product.slug}`)}
+          >Buy </button>
+
+
         </div>
       </div>
       <hr />
@@ -82,6 +86,7 @@ const ProductDetails = () => {
                   More Details
                 </button>
                 <button class="btn btn-secondary ms-1">ADD TO CART</button>
+
               </div>
             </div>
           ))}

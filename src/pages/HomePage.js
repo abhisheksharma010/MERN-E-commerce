@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../componenets/layout/Layout";
 import { useNavigate } from "react-router-dom";
+import "../styles/HomePage.css"
 import axios from "axios";
 import { Checkbox, Radio } from "antd";
 import { Image, Collapse, Button } from 'react-bootstrap';
@@ -77,10 +78,21 @@ const HomePage = () => {
   };
 
   // filter by cat
+  const clearFilters = () => {
+    setChecked([]);
+    setRadio([]);
+    setOpen(false);
+  }
   const handleFilter = (value, id) => {
-    let all = [id];
+    if (id == null) {
 
-    setChecked(all);
+      setChecked([]);
+    }
+    else {
+      let all = [id];
+
+      setChecked(all);
+    }
   };
   useEffect(() => {
     if (!checked.length || !radio.length) getAllProducts();
@@ -109,86 +121,156 @@ const HomePage = () => {
 
 
       <Layout title={"ALl Products - Best offers "}>
-        <div className="vh-50 vw-80 banner m-5">
-          <Image src="/images/homebg.jpg" fluid wid />
-
+        <div className=" banner">
+          <Image src="/images/homebg.jpg" fluid alt="Background Image" />
         </div>
         <div class="container center">
-          <div class="row">
-            <div class="col">
-              <Image src="/images/homebg.jpg" fluid wid />
-              Mens
+          <div className="row">
+            <div className="col">
+              <div className="card">
+                <img className="card-img-top" src="/images/girl.jpg" fluid alt="Mens Image" />
+                <div className="card-body">
+                  <h5 className="card-title text-overlay">Mens</h5>
+                </div>
+              </div>
             </div>
-            <div class="col">
-              <Image src="/images/homebg.jpg" fluid wid />
-              Womens
+            <div className="col">
+              <div className="card ">
+                <img className="card-img-top" src="/images/men.jpg" fluid alt="Womens Image" />
+                <div className="card-body">
+                  <h5 className="card-title text-overlay">Womens</h5>
+                </div>
+              </div>
             </div>
-            <div class="col">
-              <Image src="/images/homebg.jpg" fluid wid />
-              CHildrens
+            <div className="col">
+              <div className="card ">
+                <img className="card-img-top img-fluid" src="/images/watch.jpg" fluid alt="Childrens Image" />
+                <div className="card-body">
+                  <h5 className="card-title text-overlay">Childrens</h5>
+                </div>
+              </div>
             </div>
           </div>
+
+
         </div>
+        {/* className="collapse navbar-collapse" id="navbarTogglerDemo01" */}
+        {/* //dem0 */}
+        <div className="custom-container navbar navbar-expand-lg ">
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#filter" aria-controls="filter" aria-expanded="false" aria-label="Toggle navigation">
+            <span>Filters </span>
+          </button>
+          <div className="custom-container collapse navbar-collapse" id="filter">
 
+            <span
+              className={`custom-heading ${checked.length === 0 ? 'active' : ''}`}
+              onClick={() => handleFilter(!checked.includes(null), null)}
+            >
+              All Products
+            </span>
 
-        <div className="container-fluid row mt-3">
-          <div className="col-md-2">
-            <h4 className="text-center">Filter By Category</h4>
-            <h4 className="text-center mt-4">Filter By Price</h4>
-            <div className="d-flex flex-column">
-              <Radio.Group onChange={(e) => setRadio(e.target.value)}>
-                {Prices?.map((p) => (
-                  <div key={p._id}>
-                    <Radio value={p.array}>{p.name}</Radio>
-                  </div>
-                ))}
-              </Radio.Group>
-            </div>
-            <div className="d-flex flex-column">
-              <button
-                className="btn btn-danger"
-                onClick={() => window.location.reload()}
+            {categories?.map((c) => (
+              <span
+                key={c._id}
+                className={`custom-category ${checked.includes(c._id) ? 'active' : ''}`}
+                onClick={() => handleFilter(!checked.includes(c._id), c._id)}
               >
-                RESET FILTERS
-              </button>
-            </div>
-          </div>
-          <div className="col-md-2">
-
-
-            <div className="d-flex justify-content-between flex">
-              {categories?.map((c) => (
-                <span
-                  key={c._id}
-                  className={`text-nowrap m-4 list-group-item list-group-item-action ${checked.includes(c._id) ? 'active' : ''}`}
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => handleFilter(!checked.includes(c._id), c._id)}
-                >
-                  {c.name}
-                </span>
-              ))}
-
-            </div>
+                {c.name}
+              </span>
+            ))}
 
             <Button
+              className="custom-button"
               onClick={() => setOpen(!open)}
               aria-controls="example-collapse-text"
               aria-expanded={open}
             >
-              click
+              {open ? 'Hide Filters' : 'Show Filters'}
             </Button>
-            <Collapse in={open}>
-              <div id="example-collapse-text">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
-                terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer
-                labore wes anderson cred nesciunt sapiente ea proident.
-              </div>
-            </Collapse>
-            {/* price filter */}
 
+            {open && (
+              <div>
+                {/* Your filter input components or any additional content goes here */}
+              </div>
+            )}
+
+            <button
+              className="btn btn-danger rounded custom-reset-button"
+              onClick={() => clearFilters()}
+            >
+              RESET FILTERS
+            </button>
           </div>
-          <div className="col-md-9">
-            <h1 className="text-center">All Products</h1>
+        </div>
+        {/* //dem0 */}
+
+        <div className="container-fluid  mt-3">
+
+
+
+          {/* <div className="d-flex justify-content-between flex">
+            <span
+              className={`h2 text-nowrap m-4 mb-8 list-group-item list-group-item-action ${checked.length === 0 ? 'active' : ''}`}
+              style={{ cursor: 'pointer' }}
+              onClick={() => handleFilter(!checked.includes(null), null)}
+            >
+              All Products
+            </span>
+
+            {categories?.map((c) => (
+              <span
+                key={c._id}
+                className={`h3 text-nowrap m-2 mb-4 list-group-item list-group-item-action ${checked.includes(c._id) ? 'active' : ''}`}
+                style={{ cursor: 'pointer' }}
+                onClick={() => handleFilter(!checked.includes(c._id), c._id)}
+              >
+                {c.name}
+              </span>
+            ))}
+
+            <Button
+              className="m-2 mb-5"
+              onClick={() => setOpen(!open)}
+              aria-controls="example-collapse-text"
+              aria-expanded={open}
+            >
+              Filters
+            </Button>
+
+            <button
+              className="btn btn-danger rounded m-2 mb-5"
+              onClick={() => window.location.reload()}
+            >
+              RESET FILTERS
+            </button>
+          </div> */}
+
+          <Collapse in={open}>
+            <div id="example-collapse-text" className="col-md-2 center">
+              <div className="d-flex flex-column">
+                <Radio.Group onChange={(e) => setRadio(e.target.value)}>
+                  {Prices?.map((p) => (
+                    <div key={p._id}>
+                      <Radio value={p.array}>{p.name}</Radio>
+                    </div>
+                  ))}
+                </Radio.Group>
+              </div>
+              <div className="d-flex flex-column">
+                <button
+                  className="btn btn-danger"
+                  onClick={() => window.location.reload()}
+                >
+                  RESET FILTERS
+                </button>
+              </div>
+            </div>
+          </Collapse>
+          {/* price filter */}
+
+
+          <div className="m-5 col-md-9">
+            {/* <h1 className="text-center">All Products</h1> */}
             <div className="d-flex flex-wrap">
               {products?.map((p) => (
                 <div className="card m-2" style={{ width: "18rem" }}>

@@ -1,0 +1,65 @@
+.custom-container {
+  display: flex;
+  margin-top: 2rem;
+  justify-content: space-around;
+}
+
+.custom-heading {
+  font-size: 2rem;
+  margin: 2px;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+
+.custom-heading.active {
+  border-color: black;
+}
+
+.custom-category {
+  font-size: 1.5rem;
+  margin: 2.3px;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+
+.custom-category.active {
+  border-bottom: 2px solid black;
+}
+
+.custom-button {
+  margin: 2px;
+  margin-bottom: 5px;
+}
+
+.custom-reset-button {
+  margin: 2px;
+  margin-bottom: 5px;
+}
+
+/* Fot the banner CSS */
+/* Banner.css */
+
+.banner {
+  position: relative;
+  overflow: hidden;
+  height: 60vh;
+  margin-bottom: 25px;
+}
+
+.banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 767px) {
+  .banner {
+    height: 30vh; /* Change the height to 30vh for mobile devices */
+  }
+}
+.special-card {
+  height: 20vh;
+}
+.special-card .col {
+  height: 100%;
+}
