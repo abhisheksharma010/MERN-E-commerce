@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { useAuth } from "../../context/auth";
 import toast from 'react-hot-toast';
@@ -11,6 +11,8 @@ const Header = () => {
   const [auth, setAuth] = useAuth();
   const [cart] = useCart();
   const categories = useCategory();
+  const [isScrolled, setIsScrolled] = useState(false);
+
   const handleLogout = () => {
     setAuth({
       ...auth,
@@ -22,9 +24,33 @@ const Header = () => {
 
     // toast.success("Logout Successfully");
   };
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrolled = window.scrollY > 0;
+      setIsScrolled(scrolled);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+  const headerStyles = {
+    backgroundColor: isScrolled ? 'white' : '#ffb84d',
+    position: isScrolled ? 'sticky' : 'relative',
+    top: 0,
+    zIndex: 1,
+    transition: 'background-color 0.3s ease-in-out',
+    boxShadow: 'none',
+    borderBottom: 'none',
+  };
+
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      {/* <nav className="navbar navbar-expand-lg bg-body-tertiary"> */}
+      <nav className="navbar navbar-expand-lg" style={headerStyles}>
+
         <div className="container-fluid">
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon" />🛒E-Commerce

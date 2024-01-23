@@ -15,6 +15,7 @@ import AdminDashboard from './pages/Admin/AdminDashboard';
 import CreateCataegory from './pages/Admin/CreateCataegory';
 import CreateProduct from './pages/Admin/CreateProduct';
 import UpdateProduct from './pages/Admin/UpdateProduct';
+
 import Product from './pages/Admin/Product';
 import Profile from './pages/user/Profile';
 import Order from './pages/user/Order';
@@ -24,6 +25,7 @@ import Categories from './pages/Categories';
 import CategoryProduct from './pages/CategoryProduct';
 import CartPage from './pages/CartPage';
 import Purchase from './pages/Purchase';
+import AdminOrders from './pages/Admin/AdminOrder';
 function App() {
   return (
     <>
@@ -54,6 +56,7 @@ function App() {
           <Route path='admin/create-category' element={<CreateCataegory />} />
 
           <Route path='admin/create-product' element={<CreateProduct />} />
+          <Route path='admin/orders' element={<AdminOrders />} />
           <Route path='admin/product/:slug' element={<UpdateProduct />} />
           <Route path='admin/products' element={<Product />} />
         </Route>

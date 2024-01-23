@@ -1,10 +1,10 @@
 import React from 'react';
-import { NavLink,Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 const Fotter = () => {
   return (
-    <div className='footer'>
-     <h4 className='text-center'> All Right Reserved &copy; Abhishek Sharma
+    <div className='footer' style={{ backgroundColor: "#ffb84d" }}>
+      <h4 className='text-center'> All Right Reserved &copy; Abhishek Sharma
       </h4>
       <p className='text-center mt-3'>
         <Link to='/about'> About</Link>|
@@ -12,7 +12,7 @@ const Fotter = () => {
         <Link to='/policy'> Privacy and Policy</Link>
 
       </p>
-      </div>
+    </div>
   )
 }
 

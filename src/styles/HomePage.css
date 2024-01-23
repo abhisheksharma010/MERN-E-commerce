@@ -1,65 +1,217 @@
 .custom-container {
   display: flex;
-  margin-top: 2rem;
+  flex-direction: row;
   justify-content: space-around;
+  align-items: center;
+  /* margin: 0 20px; */
+  margin-top: 2rem;
+}
+.homepage-sections {
+  margin: 0 80px;
+}
+.Filter-section {
+  display: flex;
+  /* margin: 0 70px; */
+  /* justify-content: space-around; */
+  align-items: center;
+  flex-wrap: wrap; /* Added to allow content to wrap to the next line */
+}
+.filters {
+  background-color: rgb(248, 245, 245);
+}
+.filter-button {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+.custom-toggler {
+  margin-bottom: 1rem;
 }
 
 .custom-heading {
-  font-size: 2rem;
-  margin: 2px;
-  margin-bottom: 4px;
-  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: gray;
+  text-align: center; /* Center the text */
+  margin: 0.5rem; /* Adjust as needed */
 }
 
-.custom-heading.active {
-  border-color: black;
-}
-
-.custom-category {
-  font-size: 1.5rem;
-  margin: 2.3px;
-  margin-bottom: 4px;
-  cursor: pointer;
-}
-
-.custom-category.active {
-  border-bottom: 2px solid black;
-}
-
-.custom-button {
-  margin: 2px;
-  margin-bottom: 5px;
-}
-
+.custom-category,
+.custom-button,
 .custom-reset-button {
-  margin: 2px;
-  margin-bottom: 5px;
+  color: gray;
+
+  text-align: center;
+  font-weight: 300;
+
+  font-size: 1rem;
+  margin: 0.5rem; /* Adjust as needed */
+}
+
+.custom-filter-content {
+  width: 100%;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .custom-container.column {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* Add this CSS for fixed button size with an icon inside */
+.custom-button {
+  width: 150px; /* Adjust as needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Add this CSS for icon styling inside the button */
+.custom-button i {
+  margin-right: 0.5rem; /* Adjust as needed */
 }
 
 /* Fot the banner CSS */
 /* Banner.css */
 
-.banner {
+/* Banner.css */
+.navbar {
+  border: none !important;
+}
+.banners {
   position: relative;
   overflow: hidden;
   height: 60vh;
   margin-bottom: 25px;
 }
 
-.banner img {
+.banners img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: fill;
 }
 
 @media (max-width: 767px) {
-  .banner {
+  .banners {
     height: 30vh; /* Change the height to 30vh for mobile devices */
   }
+
+  .custom-card {
+    width: 250px;
+    height: 250px;
+    overflow: hidden;
+    margin: 15px;
+  }
+  .filter-category {
+    display: flex;
+    flex-direction: column;
+  }
+  .filter-button {
+    flex-direction: column;
+  }
 }
-.special-card {
+
+/* .special-card {
   height: 20vh;
 }
 .special-card .col {
   height: 100%;
+} */
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 80px 0;
+}
+
+.card {
+  border: none;
+  margin-top: 5px;
+  transition: transform 0.3s ease-in-out;
+  width: 350px;
+  height: 3%;
+  border: black solid 2px;
+}
+
+/* .card:hover {
+  transform: scale(1.05);
+} */
+
+.col {
+  display: flex; /* Add flex display to the column */
+  justify-content: space-around;
+}
+
+.navbar {
+  border: none !important;
+}
+.custom-card {
+  position: relative;
+  width: 350px;
+  height: 350px;
+  overflow: hidden;
+  margin: 5px;
+}
+.product-card {
+  position: relative;
+  width: 350px;
+  height: 350px;
+  overflow: hidden;
+  margin: 10px;
+  border: black 1px solid;
+}
+
+.category-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+}
+.product-img {
+  width: 100%;
+  height: 80%;
+
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+}
+.text-overlay {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  opacity: 1;
+  transition: top 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.shop-now {
+  position: absolute;
+  top: 100%; /* Initially positioned below the card */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #ffb84d;
+  opacity: 0;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: top 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  text-decoration: none;
+}
+
+.custom-card:hover .text-overlay {
+  top: 70%; /* Move the text-overlay up slightly on hover */
+  opacity: 1;
+}
+.shop-now:hover {
+  letter-spacing: 2px;
+  text-decoration: underline;
+}
+.custom-card:hover .shop-now {
+  top: 80%; /* Move the shop-now link to the original position of the text-overlay */
+  opacity: 1;
+}
+.product-card:hover .shop-now {
+  top: 80%; /* Move the shop-now link to the original position of the text-overlay */
+  opacity: 1;
 }
