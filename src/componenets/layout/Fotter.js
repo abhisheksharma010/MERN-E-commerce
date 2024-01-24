@@ -1,19 +1,19 @@
+// Footer component
+
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 
-const Fotter = () => {
+const Footer = () => {
   return (
-    <div className='footer' style={{ backgroundColor: "#ffb84d" }}>
-      <h4 className='text-center'> All Right Reserved &copy; Abhishek Sharma
-      </h4>
+    <div className='footer' style={{ background: '#f5b82e' }}>
+      <h4 className='text-center'> All Right Reserved &copy; Abhishek Sharma </h4>
       <p className='text-center mt-3'>
-        <Link to='/about'> About</Link>|
-        <Link to='/contact'> Contact</Link>|
-        <Link to='/policy'> Privacy and Policy</Link>
-
+        <Link to='/about' className="footer-link"> About</Link>|
+        <Link to='/contact' className="footer-link"> Contact</Link>|
+        <Link to='/policy' className="footer-link"> Privacy and Policy</Link>
       </p>
     </div>
-  )
-}
+  );
+};
 
-export default Fotter
+export default Footer;

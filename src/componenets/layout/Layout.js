@@ -51,14 +51,16 @@ const Layout = ({ children, title, description, keywords, author }) => {
             position: "fixed",
             bottom: "20px",
             right: "20px",
-            background: "#007BFF",
+            background: "#ffd289",
             color: "#fff",
-            padding: "10px",
-            borderRadius: "5px",
+            padding: "20px",
+            fontSize: "20px",
+            borderRadius: "50%",
             cursor: "pointer",
+            border: " white 1px solid"
           }}
         >
-          &#9650; {/* Unicode character for an upward arrow */}
+          &#8679;
         </div>
       )}
     </div>

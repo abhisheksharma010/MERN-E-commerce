@@ -20,6 +20,8 @@ const HomePage = () => {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [sortOrder, setSortOrder] = useState(null);
+
 
   //get all cat
   const getAllCategory = async () => {
@@ -37,6 +39,11 @@ const HomePage = () => {
     getAllCategory();
     getTotal();
   }, []);
+
+  const handleSortChange = (value) => {
+    setSortOrder(value);
+    // Additional logic based on the selected sorting option
+  };
   //get products
   const getAllProducts = async () => {
     try {
@@ -129,28 +136,29 @@ const HomePage = () => {
           <div className="row align-items-center">
             <div className="col text-center">
               <div className="custom-card">
-                <img className="category-img" src="/images/girl.jpg" alt="Mens Image" />
-                <div className="card-body">
-                  <h5 className="card-title text-overlay">Mens</h5>
-                  <Link to="/mens" className="shop-now">Shop Now</Link>
-                </div>
-              </div>
-            </div>
-            {/* Repeat similar structure for Womens and Childrens */}
-            <div className="col text-center">
-              <div className="custom-card">
                 <img className="category-img" src="/images/girl.jpg" alt="Womens Image" />
                 <div className="card-body">
-                  <h5 className="card-title text-overlay">Womens</h5>
+                  <h5 className="card-title text-overlay">Womens <br /> Collection</h5>
                   <Link to="/womens" className="shop-now">Shop Now</Link>
                 </div>
               </div>
             </div>
             <div className="col text-center">
-              <div className="custom-card">
-                <img className="category-img" src="/images/watch.jpg" alt="Childrens Image" />
+              <div className="custom-card category-card" >
+                <img className="category-img" src="/images/men.webp" alt="Mens Image" />
                 <div className="card-body">
-                  <h5 className="card-title text-overlay">Childrens</h5>
+                  <h5 className="card-title text-overlay">Mens<br /> Collection</h5>
+                  <Link to="/mens" className="shop-now">Shop Now</Link>
+                </div>
+              </div>
+            </div>
+            {/* Repeat similar structure for Womens and Childrens */}
+
+            <div className="col text-center">
+              <div className="custom-card">
+                <img className="category-img" src="/images/accesssories.webp" alt="Childrens Image" />
+                <div className="card-body">
+                  <h5 className="card-title text-overlay">Accesories </h5>
                   <Link to="/childrens" className="shop-now">Shop Now</Link>
                 </div>
               </div>
@@ -205,14 +213,14 @@ const HomePage = () => {
               </div>
             </div>
 
-            {/* //dem0 */}
+            {/* //dem0 */}</div>
+          <div className=" menu-filter mt-3">
 
-            <div className="container-fluid filters mt-3">
-
-
-              <Collapse in={open}>
-                <div id="example-collapse-text filters" className="col-md-2 center">
-                  <div className="d-flex flex-column ">
+            <Collapse in={open} className="collapse-filter">
+              <div id="example-collapse-text filters" className="col-md-2 center">
+                <div className="filters">
+                  <div className="d-flex flex-column filter-price">
+                    <h2>Prices</h2>
                     <Radio.Group onChange={(e) => setRadio(e.target.value)}>
                       {Prices?.map((p) => (
                         <div key={p._id}>
@@ -221,64 +229,79 @@ const HomePage = () => {
                       ))}
                     </Radio.Group>
                   </div>
-                  <div className="d-flex flex-column">
-
+                  <div className="d-flex flex-column filter-sort">
+                    <h2 className="sort-label">Sort by</h2>
+                    <Radio.Group onChange={(e) => setSortOrder(e.target.value)}>
+                      <div>
+                        <Radio className="sort-radio" value="default">Default</Radio>
+                      </div>
+                      <div>
+                        <Radio className="sort-radio" value="highToLow">High to Low</Radio>
+                      </div>
+                      <div>
+                        <Radio className="sort-radio" value="lowToHigh">Low to High</Radio>
+                      </div>
+                    </Radio.Group>
                   </div>
                 </div>
-              </Collapse>
-            </div>
-            {/* price filter */}
+              </div>
+            </Collapse>
 
 
-            <div className="m-5 col-md-9">
-              {/* <h1 className="text-center">All Products</h1> */}
-              <div className="d-flex flex-wrap">
-                {products?.map((p) => (
-                  <div className="product-card" style={{ width: "18rem" }}>
-                    <img
-                      src={`/api/v1/product/product-photo/${p._id}`}
-                      className="product-img "
-                      alt={p.name}
-                    />
-                    <div className="card-body">
-                      {/* className="shop-now" */}
-                      <h5 className="card-title .text-secondary">{p.name}</h5>
-                      {/* <p className="card-text">
+          </div>
+          {/* price filter */}
+
+
+          {/* <div className=" col-md-9"> */}
+          {/* <h1 className="text-center">All Products</h1> */}
+          <div className="d-flex flex-wrap">
+            {products?.map((p) => (
+              <div className="product-card" >
+                <img
+                  src={`/api/v1/product/product-photo/${p._id}`}
+                  className="product-img "
+                  alt={p.name}
+                />
+                <div className="card-body">
+                  {/* className="shop-now" */}
+                  <h5 className="card-title .text-secondary">{p.name}</h5>
+                  {/* <p className="card-text">
                         {p.description.substring(0, 30)}...
                       </p> */}
-                      <p className="card-text h-6 .text-secondary"> $ {p.price}</p>
-                      <button type="button" className="shop-now btn btn-outline-secondary">Quick View</button>
+                  <p className="card-text h-6 .text-secondary"> $ {p.price}</p>
+                  <button type="button" className="shop-now btn btn-outline-secondary" onClick={() => navigate(`/product/${p.slug}`)}
+                  >Quick View</button>
 
 
-                      {/* <button class="btn btn-primary ms-1" onClick={() => {
+                  {/* <button class="btn btn-primary ms-1" onClick={() => {
                         navigate(`/product/${p.slug}`)
                       }}>More Details</button> */}
-                      {/* <button class="btn btn-secondary ms-1" onClick={() => {
+                  {/* <button class="btn btn-secondary ms-1" onClick={() => {
                         setCart([...cart, p]);
                         console.log(cart?.length)
                       }
 
                       
                       }>ADD TO CART</button> */}
-                    </div>
-                  </div>
-                ))}
+                </div>
               </div>
-              <div className="m-2 p-3">
-                {products && products.length < total && (
-                  <button
-                    className="btn btn-warning"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setPage(page + 1);
-                    }}
-                  >
-                    {loading ? "Loading ..." : "Loadmore"}
-                  </button>
-                )}
-              </div>
-            </div>
+            ))}
           </div>
+          <div className=" p-3">
+            {products && products.length < total && (
+              <button
+                className="btn btn-warning"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setPage(page + 1);
+                }}
+              >
+                {loading ? "Loading ..." : "Loadmore"}
+              </button>
+            )}
+          </div>
+
+          {/* </div> */}
 
         </div>
       </Layout >

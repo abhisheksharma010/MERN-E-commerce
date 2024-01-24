@@ -131,6 +131,17 @@ const Header = () => {
                     </Badge>
                   </NavLink>
                 </li>
+
+              )}
+              {auth?.user?.role === 0 && (
+                <li className="nav-item">
+                  <NavLink to="/cart" className="nav-link">
+                    <Badge count={cart?.length} showZero offset={[10, -5]}>
+                      Order
+                    </Badge>
+                  </NavLink>
+                </li>
+
               )}
 
 
