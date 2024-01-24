@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../componenets/layout/Layout";
 import { useNavigate, Link } from "react-router-dom";
+import ProductCard from "../componenets/ProductCard";
 import "../styles/HomePage.css"
 import axios from "axios";
 import { Checkbox, Radio } from "antd";
@@ -255,36 +256,9 @@ const HomePage = () => {
           {/* <div className=" col-md-9"> */}
           {/* <h1 className="text-center">All Products</h1> */}
           <div className="d-flex flex-wrap">
+
             {products?.map((p) => (
-              <div className="product-card" >
-                <img
-                  src={`/api/v1/product/product-photo/${p._id}`}
-                  className="product-img "
-                  alt={p.name}
-                />
-                <div className="card-body">
-                  {/* className="shop-now" */}
-                  <h5 className="card-title .text-secondary">{p.name}</h5>
-                  {/* <p className="card-text">
-                        {p.description.substring(0, 30)}...
-                      </p> */}
-                  <p className="card-text h-6 .text-secondary"> $ {p.price}</p>
-                  <button type="button" className="shop-now btn btn-outline-secondary" onClick={() => navigate(`/product/${p.slug}`)}
-                  >Quick View</button>
-
-
-                  {/* <button class="btn btn-primary ms-1" onClick={() => {
-                        navigate(`/product/${p.slug}`)
-                      }}>More Details</button> */}
-                  {/* <button class="btn btn-secondary ms-1" onClick={() => {
-                        setCart([...cart, p]);
-                        console.log(cart?.length)
-                      }
-
-                      
-                      }>ADD TO CART</button> */}
-                </div>
-              </div>
+              <ProductCard key={p._id} product={p} />
             ))}
           </div>
           <div className=" p-3">

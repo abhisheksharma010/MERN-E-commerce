@@ -26,11 +26,13 @@ import CategoryProduct from './pages/CategoryProduct';
 import CartPage from './pages/CartPage';
 import Purchase from './pages/Purchase';
 import AdminOrders from './pages/Admin/AdminOrder';
+import ProductCard from './componenets/ProductCard';
 function App() {
   return (
     <>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/c" element={<ProductCard />} />
         <Route path="/product/:slug" element={<ProductDetails />} />
         <Route path="/category/:slug" element={<CategoryProduct />} />
         <Route path="/categories" element={<Categories />} />

@@ -6,6 +6,10 @@ import SearchInput from "../Forms/SearchInput";
 import useCategory from '../../hooks/useCategory';
 import { useCart } from "../../context/cart";
 import { Badge } from "antd";
+import { CiHeart } from "react-icons/ci";
+import { MdTrolley } from "react-icons/md";
+
+
 
 const Header = () => {
   const [auth, setAuth] = useAuth();
@@ -127,7 +131,7 @@ const Header = () => {
                 <li className="nav-item">
                   <NavLink to="/cart" className="nav-link">
                     <Badge count={cart?.length} showZero offset={[10, -5]}>
-                      Cart
+                      <CiHeart />
                     </Badge>
                   </NavLink>
                 </li>
@@ -137,7 +141,7 @@ const Header = () => {
                 <li className="nav-item">
                   <NavLink to="/cart" className="nav-link">
                     <Badge count={cart?.length} showZero offset={[10, -5]}>
-                      Order
+                      <MdTrolley />
                     </Badge>
                   </NavLink>
                 </li>
