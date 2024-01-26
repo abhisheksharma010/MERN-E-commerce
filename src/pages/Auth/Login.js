@@ -14,6 +14,9 @@ const Login = () => {
   const location = useLocation();
 
   // form function
+  const googlesign = () => {
+    window.open("http://localhost:8080/auth/google/callback", "_self")
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -82,7 +85,11 @@ const Login = () => {
           <button type="submit" className="btn btn-primary login">
             LOGIN
           </button>
+
         </form>
+        <button type="submit" className="btn btn-primary login" onClick={googlesign}>
+          Google
+        </button>
       </div>
     </Layout>
   );

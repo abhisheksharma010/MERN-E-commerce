@@ -5,18 +5,18 @@ import UserMenu from '../../componenets/layout/UserMenu';
 const Dashboard = () => {
   return (
     <Layout title={'DashBoard'}>
-        <div className="container-flui p-3 m-3">
-                <div className="row">
-                    <div className="col-md-3">
-                        <UserMenu/>
-                    </div>
-                    <div className="col-md-9">
-                        <h1>DashBoard</h1>
-                    </div>
-                </div>
+      <div className="container p-3 m-3">
+        <div className="row">
+          <div className="col-md-3">
+            <UserMenu className="fixed-user-menu" />
+          </div>
+          <div className="col-md-9">
+            <h1>DashBoard</h1>
+          </div>
+        </div>
 
-            </div>
-        
+      </div>
+
     </Layout>
   )
 }

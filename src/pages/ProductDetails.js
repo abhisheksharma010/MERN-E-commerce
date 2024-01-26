@@ -1,17 +1,60 @@
 import Layout from '../componenets/layout/Layout';
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useCart } from '../context/cart';
+import { CiHeart } from "react-icons/ci";
+import { FaHeart } from "react-icons/fa";
 import { useParams, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import ProductCard from '../componenets/ProductCard';
+
+import { FaRegStar } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
+
+
+
 const ProductDetails = () => {
   const params = useParams();
   const navigate = useNavigate();
+
+  const [cart, setCart] = useCart();
+  const [ratings, setRatings] = useState([]);
+  const [averageRating, setAverageRating] = useState(null);
+  const [reviews, setReviews] = useState([]);
   const [product, setProduct] = useState({});
   const [relatedProducts, setRelatedProducts] = useState([]);
+  const [rating, setRating] = useState(null);
+  const [message, setMessage] = useState("");
+
+
+  const handleClick = (value) => {
+    setRating(value === rating ? null : value);
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post('/api/v1/product/add-product-rating', {
+        message: message,
+        rating: rating,
+        productId: product._id,
+      });
+
+      console.log(response.data);
+      toast.success("Rating added to the cart");
+    } catch (error) {
+      toast.error("Rating not added to the cart");
+    }
+    setRating(null);
+    setMessage("");
+
+
+  };
 
   //initalp details
   useEffect(() => {
     if (params?.slug) getProduct();
   }, [params?.slug]);
+
   //getProduct
   const getProduct = async () => {
     try {
@@ -35,6 +78,22 @@ const ProductDetails = () => {
       console.log(error);
     }
   };
+  const fetchProductRating = async (pid) => {
+    const productId = product._id;
+    console.log(productId);
+    try {
+      const response = await axios.get("/api/v1/product/get-product-rating", productId);
+      console.log(product);
+
+      const { averageRating, messages } = response.data;
+      setAverageRating(averageRating);
+      setReviews(messages);
+      console.log(averageRating);
+      console.log(messages);
+    } catch (error) {
+      console.error("Error fetching product rating:", error);
+    }
+  };
   return (
     <Layout>
       <div className="row container mt-2">
@@ -54,9 +113,23 @@ const ProductDetails = () => {
           <h6>Description : {product.description}</h6>
           <h6>Price : {product.price}</h6>
           <h6>Category : {product?.category?.name}</h6>
-          <button class="btn btn-secondary ms-1">ADD TO CART</button>
-          <button class="btn btn-success ms-1" onClick={() => navigate(`/purchase/${product.slug}`)}
-          >Buy </button>
+          {cart.includes(product._id) ? (
+            <FaHeart style={{ fontSize: "22px", color: "red" }} onClick={() => {
+              setCart(cart.filter(itemId => itemId !== product._id));
+              toast.success("Item removed from the cart");
+            }} />
+          ) : (
+            <CiHeart style={{ fontSize: "22px", color: "red" }} onClick={() => {
+              setCart([...cart, product._id]);
+              toast.success("Item added to the cart");
+            }} />
+          )}
+          {/* <button class="btn btn-success ms-1" onClick={() => navigate(`/purchase/${product.slug}`)}
+          >Buy </button> */}
+          {/* navigate(/purchase/${product.slug} */}
+          <button class="btn btn-success ms-1" onClick={() =>
+            fetchProductRating()}>Buy </button>
+
 
 
         </div>
@@ -67,28 +140,54 @@ const ProductDetails = () => {
         {relatedProducts.length < 1 && (
           <p className="text-center">No Similar Products found</p>
         )}
+        <div className="container mt-4">
+          <div className="mb-3">
+            {[1, 2, 3, 4, 5].map((starValue) => (
+              <span
+                key={starValue}
+                onClick={() => handleClick(starValue)}
+                style={{ cursor: "pointer", fontSize: "24px" }}
+              >
+                {rating && starValue <= rating ? <FaStar color="#ffc107" /> : <FaRegStar color="#ffc107" />}
+              </span>
+            ))}
+          </div>
+          <div className="mb-3">
+            <textarea
+              className="form-control"
+              placeholder="Enter your message..."
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+          </div>
+          <div>
+            <button className="btn btn-primary" onClick={handleSubmit}>
+              Submit Rating
+            </button>
+          </div>
+        </div>
+        {ratings.length > 0 && (
+          <div className="mt-4">
+            <h5>Ratings and Messages:</h5>
+            {ratings.map((item, index) => (
+              <div key={index} className="card mb-2">
+                <div className="card-body">
+                  <p className="card-text">
+                    <strong>Rating:</strong> {item.rating}
+                  </p>
+                  <p className="card-text">
+                    <strong>Message:</strong> {item.message}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
         <div className="d-flex flex-wrap">
           {relatedProducts?.map((p) => (
-            <div className="card m-2" style={{ width: "18rem" }}>
-              <img
-                src={`/api/v1/product/product-photo/${p?._id}`}
-                className="card-img-top"
-                alt={p.name}
-              />
-              <div className="card-body">
-                <h5 className="card-title">{p.name}</h5>
-                <p className="card-text">{p.description.substring(0, 30)}...</p>
-                <p className="card-text"> $ {p.price}</p>
-                <button
-                  className="btn btn-primary ms-1"
-                  onClick={() => navigate(`/product/${p.slug}`)}
-                >
-                  More Details
-                </button>
-                <button class="btn btn-secondary ms-1">ADD TO CART</button>
+            <ProductCard key={p._id} product={p} />
 
-              </div>
-            </div>
           ))}
         </div>
       </div>

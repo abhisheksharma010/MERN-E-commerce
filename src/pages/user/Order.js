@@ -4,6 +4,7 @@ import Layout from "../../componenets/layout/Layout";
 import axios from "axios";
 import { useAuth } from "../../context/auth";
 import moment from "moment";
+import { MdDelete } from "react-icons/md";
 
 const Order = () => {
     const [orders, setOrders] = useState([]);
@@ -13,22 +14,28 @@ const Order = () => {
         try {
             const { data } = await axios.get("/api/v1/order/user-order");
             setOrders(data);
-            console.log(data);
-            console.log(orders);
         } catch (error) {
             console.log(error);
         }
     };
+    const handleDeleteOrder = async (orderId) => {
+        try {
+            await axios.post(`/api/v1/order/remove-order`, { orderId });
+            getOrders();
+        } catch (error) {
+            console.error('Error deleting order:', error);
+        }
+    };
+
 
     useEffect(() => {
         if (auth?.token) {
             getOrders();
         }
     }, [auth?.token]);
+
     useEffect(() => {
-        // This will log the updated state after it has been applied
-        console.log(orders);
-        console.log(`${orders} yo yo`);
+        console.log(Array.isArray(orders[0]?.productId));
     }, [orders]);
 
     return (
@@ -49,41 +56,51 @@ const Order = () => {
                                                 <th scope="col">#</th>
                                                 <th scope="col">Status</th>
                                                 <th scope="col">Buyer</th>
-                                                <th scope="col">Date</th>
-                                                <th scope="col">Payment</th>
+                                                <th scope="col">Order Date</th>
+                                                <th scope="col">Delivery Date</th>
+                                                <th scope="col">Delivery</th>
                                                 <th scope="col">Quantity</th>
+                                                <th scope="col"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <td>{i + 1}</td>
                                                 <td>{o?.status}</td>
-                                                <td>{o?.buyer?.name}</td>
-                                                <td>{moment(o?.createAt).fromNow()}</td>
-                                                <td>{o?.payment.success ? "Success" : "Failed"}</td>
-                                                <td>{o?.productId?.length}</td>
+                                                <td>{o?.userId?.name}</td>
+
+                                                <td>{moment(o?.createdAt).fromNow()}</td>
+                                                <td>{moment(o?.delivery).format("MMMM D, YYYY")}</td>
+                                                <td>{o?.deliverystatus}</td>
+                                                <td>{o?.quantity}</td>
+                                                <td> {(o?.deliverystatus != "cancel") ? (
+                                                    <MdDelete onClick={() => handleDeleteOrder(o._id)} />
+                                                ) : (
+                                                    <MdDelete style={{ color: 'red', cursor: 'not-allowed' }} />
+                                                )}</td>
                                             </tr>
                                         </tbody>
                                     </table>
                                     <div className="container">
-                                        {o?.productId?.map((p, j) => (
-                                            <div className="row mb-2 p-3 card flex-row" key={p._id}>
-                                                <div className="col-md-4">
-                                                    <img
-                                                        src={`/api/v1/product/product-photo/${p._id}`}
-                                                        className="card-img-top"
-                                                        alt={p.name}
-                                                        width="100px"
-                                                        height="100px"
-                                                    />
+                                        {Array.isArray(o?.productId) &&
+                                            Array.from(o?.productId).map((p, j) => (
+                                                <div className="row mb-2 p-3 card flex-row" key={p._id}>
+                                                    <div className="col-md-4">
+                                                        <img
+                                                            src={`/api/v1/product/product-photo/${p._id}`}
+                                                            className="card-img-top"
+                                                            alt={p.name}
+                                                            width="100px"
+                                                            height="100px"
+                                                        />
+                                                    </div>
+                                                    <div className="col-md-8">
+                                                        <p>{p.name}</p>
+                                                        <p>{p.description.substring(0, 30)}</p>
+                                                        <p>Price: {p.price}</p>
+                                                    </div>
                                                 </div>
-                                                <div className="col-md-8">
-                                                    <p>{p.name}</p>
-                                                    <p>{p.description.substring(0, 30)}</p>
-                                                    <p>Price: {p.price}</p>
-                                                </div>
-                                            </div>
-                                        ))}
+                                            ))}
                                     </div>
                                 </div>
                             ))

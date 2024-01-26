@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Navigate } from "react-router-dom";
 import axios from "axios";
 import Layout from '../componenets/layout/Layout';
 
@@ -45,6 +45,26 @@ const Purchase = () => {
             setQuantity(quantity - 1);
         }
     };
+    const handlePurchase = async () => {
+        const quan = quantity
+        try {
+            const response = await axios.post('/api/v1/order/add-order', {
+                address,
+                quan,
+                productId: product._id,
+            });
+            navigate(`/dashboard/user/orders`);
+
+
+            // Handle success (e.g., show a success message, redirect, etc.)
+            console.log(response.data);
+        } catch (error) {
+            // Handle error (e.g., show an error message)
+            console.error('Error making purchase:', error);
+        }
+    };
+
+
 
     return (
         <Layout>
@@ -86,7 +106,7 @@ const Purchase = () => {
                     <div>
                         Price: ${quantity * product.price}
                     </div>
-                    <button className="btn btn-success ms-1">Purchased</button>
+                    <button className="btn btn-success ms-1" onClick={handlePurchase}>Purchased</button>
                 </div>
                 {/* ... (rest of the code) */}
 

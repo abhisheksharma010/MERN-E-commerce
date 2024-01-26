@@ -51,7 +51,7 @@ const Layout = ({ children, title, description, keywords, author }) => {
             position: "fixed",
             bottom: "20px",
             right: "20px",
-            background: "#ffd289",
+            background: "#fff",
             color: "#fff",
             padding: "20px",
             fontSize: "20px",

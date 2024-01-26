@@ -130,8 +130,8 @@ const Header = () => {
               {auth?.user?.role === 0 && (
                 <li className="nav-item">
                   <NavLink to="/cart" className="nav-link">
-                    <Badge count={cart?.length} showZero offset={[10, -5]}>
-                      <CiHeart />
+                    <Badge count={cart?.length} style={{ fontSize: "8px" }} showZero offset={[10, -5]}>
+                      <CiHeart style={{ fontSize: "26px", marginLeft: "5px " }} />
                     </Badge>
                   </NavLink>
                 </li>
@@ -139,10 +139,11 @@ const Header = () => {
               )}
               {auth?.user?.role === 0 && (
                 <li className="nav-item">
-                  <NavLink to="/cart" className="nav-link">
-                    <Badge count={cart?.length} showZero offset={[10, -5]}>
-                      <MdTrolley />
-                    </Badge>
+
+                  <NavLink to="/dashboard/user/orders" className="nav-link">
+
+                    <MdTrolley style={{ fontSize: "26px", marginLeft: "5px " }} />
+
                   </NavLink>
                 </li>
 
